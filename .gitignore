@@ -1,0 +1,48 @@
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+.env/
+env/
+.idea/
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Python package files
+*.egg-info/
+*.dist-info/
+build/
+dist/
+
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+
+# Jupyter Notebook checkpoints (if using notebooks)
+.ipynb_checkpoints/
+
+# Testing & profiling
+.tox/
+.nox/
+*.prof
+
+# Pip & environment files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore VS Code workspace settings (if using VS Code)
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
