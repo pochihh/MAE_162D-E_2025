@@ -13,10 +13,12 @@ from utils import *
 from lib.tlvcodec import Encoder, Decoder
 
 def image_processing():
-    print("Running image processing...")
+    # print("Running image processing...")
+    pass
 
 def algorign_processing():
-    print("Running algorithm processing...")
+    # print("Running algorithm processing...")
+    pass
 
 def main():
     # Welcome message
@@ -37,14 +39,16 @@ def main():
                 ch = sys.stdin.read(1)
                 # print(f"You typed: {ch}")
                 if ch == 'q':
-                    print("User quit command detected. Exiting program...")
+                    print("\nUser quit command detected. Exiting program...")
                     break
                 else:
-                    print(f"Unrecognized command: {ch}")
+                    print(f"\nUnrecognized command: {ch}")
                     
             # delay for a short period to avoid busy waiting
             time.sleep(0.1)
-            print(f"time elapsed: {get_time_millis(program_start_time)}")
+            # print time elapsed since start without newline
+            print(f"\rTime elapsed: {get_time_millis(program_start_time):.2f} ms", end="")
+            print("\b" * 30, end="")  # Clear the line
             
     except KeyboardInterrupt:
         print("Keyboard interrupt detected. Exiting...")
