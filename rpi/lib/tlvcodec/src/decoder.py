@@ -11,7 +11,7 @@ from enum import Enum
 class FrameDecodeState(Enum):
     Init = 0
     MagicNum = 1
-    TotalPacketLen = 2
+    NumTotalBytes = 2
     WaitFullFrame = 3
 
 class DecodeErrorCode(Enum):
@@ -20,7 +20,7 @@ class DecodeErrorCode(Enum):
     BufferOutOfIndex = 2
     UnpackFrameHeaderError = 3
     TlvError = 4
-    TlvLenError = 6
+    TlvLenError = 5
 
 class TlvDecodeDescriptor:
     def __init__(self, bufferLen=1024):
@@ -59,10 +59,10 @@ class Decoder:
                 self.descriptor.ofst += 1
                 if self.descriptor.ofst >= len(FRAME_HEADER_MAGIC_NUM):
                     self.descriptor.ofst = 0
-                    self.descriptor.decodeState = FrameDecodeState.TotalPacketLen
+                    self.descriptor.decodeState = FrameDecodeState.NumTotalBytes
             else:
                 self.resetDescriptor()
-        elif self.descriptor.decodeState == FrameDecodeState.TotalPacketLen:
+        elif self.descriptor.decodeState == FrameDecodeState.NumTotalBytes:
             self.descriptor.frameHeader.numTotalBytes.payload[self.descriptor.ofst] = Packet
             self.descriptor.bufferIndex += 1
             self.descriptor.ofst += 1
