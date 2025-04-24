@@ -1,14 +1,22 @@
 import serial
 import time
+from ..lib.tlvcodec import Encoder, Decoder
+import ctypes
 
 # Configure the serial port
 ser = serial.Serial('/dev/ttyUSB0', 9600)  # Replace with your actual port and baud rate
 
+# prepare message to send 
+# test encoder
+encoder = Encoder(199) # device id
+encoder.addPacket(987, ctypes.sizeof(ctypes.c_uint32), ctypes.c_uint32(111))
+length, buffer = encoder.wrapupBuffer()
+
 try:
     while True:
         # Send data
-        ser.write(b'Hello, Serial!\n')
-        print("Sent: Hello, Serial!")
+        ser.write(buffer[:length])
+        print("Encoder message sent")
 
         # Receive data
         if ser.in_waiting > 0:
