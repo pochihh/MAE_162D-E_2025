@@ -46,3 +46,6 @@ pip-delete-this-directory.txt
 .vscode/settings.json
 .vscode/tasks.json
 .vscode/launch.json
+
+# Yolo 
+weights/

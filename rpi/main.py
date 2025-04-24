@@ -7,15 +7,36 @@ import tty
 import termios
 
 # Package imports
+import cv2
 
 # Custom imports
 from utils import *
+from yolo_utils import *
+from gps_utils import *
 from lib.tlvcodec import Encoder, Decoder
 
 def image_processing():
     # print("Running image processing...")
-    pass
+    frame = picam2.capture_array()
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+    
+    # Object detection
+    outputs = convert_to_blob(frame, network, 128, 128)    
+    bounding_boxes, class_objects, confidence_probs = object_detection(outputs, frame, 0.5)   
 
+def gps_processing(): 
+    data, addr = sock.recvfrom(1024)
+    line = data.decode().strip()
+
+    try:
+        distances_m = list(map(float, line.split(',')))
+    except ValueError:
+        pass
+
+    position, error = trilaterate_2D(distances_m)
+    # if position is not None:
+    #     print(f"[POS] x = {position[0]:.2f} ft, y = {position[1]:.2f} ft, RMSE = {error:.2f} ft")
+            
 def algorign_processing():
     # print("Running algorithm processing...")
     pass
@@ -23,6 +44,8 @@ def algorign_processing():
 def main():
     # Welcome message
     print_seal()
+    camera_initialization()
+    gps_initialization()
     
     # system start time 
     program_start_time = time.time()
@@ -33,6 +56,7 @@ def main():
         tty.setcbreak(fd)  # or tty.setraw(fd)
         while True:
             image_processing()
+            # gps_processing()
             algorign_processing()
             
             if select.select([sys.stdin], [], [], 0)[0]:
