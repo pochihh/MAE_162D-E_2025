@@ -42,7 +42,7 @@ void releaseEncodeDescriptor(struct TlvEncodeDescriptor *descriptor);
 
 void addTlvPacket(struct TlvEncodeDescriptor *descriptor, uint32_t tlvType, uint32_t tlvLen, const void *dataAddr);
 
-void wrapupBuffer(struct TlvEncodeDescriptor *descriptor);
+int wrapupBuffer(struct TlvEncodeDescriptor *descriptor);
 
 void resetDescriptor(struct TlvEncodeDescriptor *descriptor);
 

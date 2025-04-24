@@ -55,7 +55,7 @@ void addTlvPacket(struct TlvEncodeDescriptor *descriptor, uint32_t tlvType, uint
     descriptor->frameHeader.numTlvs++;
 }
 
-void wrapupBuffer(struct TlvEncodeDescriptor *descriptor)
+int wrapupBuffer(struct TlvEncodeDescriptor *descriptor)
 {
     // Calculate crc here if enabled
     if (descriptor->crc)
@@ -72,6 +72,8 @@ void wrapupBuffer(struct TlvEncodeDescriptor *descriptor)
     descriptor->frameHeader.numTotalBytes.value = descriptor->bufferIndex;
 
     memcpy(descriptor->buffer, &descriptor->frameHeader, sizeof(struct FrameHeader));
+
+    return (int)(descriptor->frameHeader.numTotalBytes.value); // return the total bytes of the frame
 }
 
 void resetDescriptor(struct TlvEncodeDescriptor *descriptor)
