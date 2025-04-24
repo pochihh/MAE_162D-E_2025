@@ -49,3 +49,6 @@ pip-delete-this-directory.txt
 
 # Yolo 
 weights/
+
+# local files/secrets
+*.local/
