@@ -1,6 +1,9 @@
 import serial
 import time
-from ..lib.tlvcodec import Encoder, Decoder
+import sys
+import os
+sys.path.append('../')
+from lib.tlvcodec import Encoder, Decoder
 import ctypes
 
 # Configure the serial port

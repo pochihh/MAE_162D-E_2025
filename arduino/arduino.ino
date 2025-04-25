@@ -25,7 +25,7 @@
 // If you want to use them for other purpose, or you need more servo motors
 // Arduino Mega has more pins to be utilized, plaese contact TAs for details
 
-#define USE_ULTRASONIC_SENSOR
+// #define USE_ULTRASONIC_SENSOR
 // #define USE_1D_LIDAR
 #define USE_RASPBERRY_PI
 
@@ -129,7 +129,9 @@ void setup()
     delay(100);
   }
   TimerAndInterruptSetup();
+  Serial.println("Initializing DC Motor...");
   DC_MotorInit();
+  Serial.println("Initializing Message Center...");
   RoverGlobalMsg.init();
 }
 
@@ -137,7 +139,7 @@ void loop() // Nonreal time loop, keep running but will be interrupted anytime
 {
   // put your main code here, to run repeatedly:
 
-  Serial.print("\n");
+  // Serial.print("\n");
   // Serial.print("Time:\t");
   // Serial.print(millis());
   /*
@@ -176,23 +178,23 @@ void loop() // Nonreal time loop, keep running but will be interrupted anytime
   Serial.print(ServoMotorA_Angle);
 */
 
-  Serial.print("\t, State:");
-  Serial.print(state);
+  // Serial.print("\t, State:");
+  // Serial.print(state);
 
-  Serial.print("\t,CurrentAngle:");
-  Serial.print(RoverGlobalDirection * 180 / 3.14159);
+  // Serial.print("\t,CurrentAngle:");
+  // Serial.print(RoverGlobalDirection * 180 / 3.14159);
 
-  Serial.print("\t,Current Location, X:");
-  Serial.print(RoverGlobalCoordX);
+  // Serial.print("\t,Current Location, X:");
+  // Serial.print(RoverGlobalCoordX);
 
-  Serial.print(", Y:");
-  Serial.print(RoverGlobalCoordY);
+  // Serial.print(", Y:");
+  // Serial.print(RoverGlobalCoordY);
 
-  Serial.print("\t, Target X:");
-  Serial.print(StateflowBlock_Y.PointX);
+  // Serial.print("\t, Target X:");
+  // Serial.print(StateflowBlock_Y.PointX);
 
-  Serial.print(", Y:");
-  Serial.print(StateflowBlock_Y.PointY);
+  // Serial.print(", Y:");
+  // Serial.print(StateflowBlock_Y.PointY);
 
   // for(int i=0;i<180;i++)
   //{

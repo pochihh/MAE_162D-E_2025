@@ -13,10 +13,10 @@ extern "C"
 MessageCenter::MessageCenter()
 {
     // Initialize the encoder
-    initEncodeDescriptor(&encoder, 1024, DEVICE_ID, true);
+    initEncodeDescriptor(&encoder, 256, DEVICE_ID, true);
 
     // Initialize the decoder; use the callback function to decode the message
-    initDecodeDescriptor(&decoder, 1024, true, &MessageCenter::decodeCallback);
+    initDecodeDescriptor(&decoder, 256, true, &MessageCenter::decodeCallback);
 }
 
 MessageCenter::~MessageCenter()
@@ -29,7 +29,7 @@ MessageCenter::~MessageCenter()
 void MessageCenter::init()
 {
     // set up serial communication
-    Serial1.begin(115200);
+    Serial1.begin(9600);
 }
 
 void MessageCenter::processingTick()
