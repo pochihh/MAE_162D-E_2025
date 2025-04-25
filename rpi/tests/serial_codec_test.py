@@ -21,7 +21,7 @@ try:
         ser.write(buffer[:length])
         print(f"Encoder message sent.")
         print(f"Data [{length}]:")	
-        for i in range(range):
+        for i in range(length):
             print(f'{buffer[i]:02d}', end = ' ')
         print("\n")
 
