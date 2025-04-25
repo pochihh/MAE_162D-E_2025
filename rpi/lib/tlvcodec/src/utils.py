@@ -3,7 +3,7 @@ import struct
 from enum import Enum
 
 
-__all__ = ['FrameHeader', 'TlvHeader', 'NUM_PADDING_BYTES', 'FRAME_HEADER_MAGIC_NUM']
+__all__ = ['NumTotalBytes', 'FrameHeader', 'TlvHeader', 'NUM_PADDING_BYTES', 'FRAME_HEADER_MAGIC_NUM']
 FRAME_HEADER_MAGIC_NUM = b'\x02\x01\x04\x03\x06\x05\x08\x07'
 
 MSG_BUFFER_SEGMENT_LEN = 32

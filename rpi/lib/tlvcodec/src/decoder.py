@@ -3,7 +3,7 @@
 # Desctiption: This file contains the decoder class for the TLV codec.
 
 import ctypes
-from utils import *
+from .utils import *
 import binascii # for crc32
 import struct
 from enum import Enum

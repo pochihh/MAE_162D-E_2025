@@ -12,7 +12,7 @@
 # The length of the whole data frame will be rounded up to the nearest 4 bytes when the data frame is encoded.
 
 import ctypes
-from utils import *
+from .utils import *
 import binascii # for crc32
 import struct
 
