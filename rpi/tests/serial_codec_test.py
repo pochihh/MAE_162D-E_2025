@@ -2,7 +2,7 @@ import serial
 import time
 import sys
 import os
-sys.path.append('../')
+sys.path.append('..')
 from lib.tlvcodec import Encoder, Decoder
 import ctypes
 
