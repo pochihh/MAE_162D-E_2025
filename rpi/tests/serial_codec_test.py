@@ -19,7 +19,11 @@ try:
     while True:
         # Send data
         ser.write(buffer[:length])
-        print("Encoder message sent")
+        print(f"Encoder message sent. Length: {length}")
+	print("Data:")	
+	for i in range(range):
+		print(f'{buffer[i]:02d}', end = ' ')
+	print("\n")
 
         # Receive data
         if ser.in_waiting > 0:
