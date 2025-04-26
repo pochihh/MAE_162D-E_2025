@@ -1,4 +1,3 @@
-
 #ifndef MESSAGECENTER_H
 #define MESSAGECENTER_H
 
@@ -22,7 +21,7 @@ public:
     void processingTick();
     
     // function to be called when a message is received
-    static void decodeCallback(enum DecodeErrorCode *error, const struct FrameHeader *frameHeader, struct TlvHeader *tlvHeaders, uint8_t **tlvData);
+    // static void decodeCallback(enum DecodeErrorCode *error, const struct FrameHeader *frameHeader, struct TlvHeader *tlvHeaders, uint8_t **tlvData);
 
     // can be called anytime and the message will be queued in the encoder buffer
     void addMessage(uint32_t tlvType, uint32_t tlvLen, const void *dataAddr);
@@ -34,7 +33,7 @@ private:
     byte serialBuffer[MAX_SERIAL_BUFFER_LEN];
     int bytesRead = 0;
     int messageCount = 0;
-    // Add any other private members or methods as needed
+    
 };
 
 

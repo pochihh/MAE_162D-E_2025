@@ -28,6 +28,7 @@
 // #define USE_ULTRASONIC_SENSOR
 // #define USE_1D_LIDAR
 #define USE_RASPBERRY_PI
+#define __DEBUG__
 
 #include "InterruptSetup.h" // Include the timer setting strucure provided by TAs
 #include "DC_Motor.h"       // Include the DC_Motor setting strucure provided by TAs
@@ -35,7 +36,7 @@ extern "C"
 {
 #include "src/tlvcodec.h"
 }
-#include "MessageCenter.h"  // Include the message center setting strucure provided by TAs
+#include "MessageCenter.h" // Include the message center setting strucure provided by TAs
 
 #include "src/SparkFun_Qwiic_Ultrasonic_Arduino_Library.h"
 QwiicUltrasonic myUltrasonic;                           // Create an ultrasonic sensor object
@@ -137,75 +138,78 @@ void setup()
 
 void loop() // Nonreal time loop, keep running but will be interrupted anytime
 {
-  // put your main code here, to run repeatedly:
+// put your main code here, to run repeatedly:
 
-  // Serial.print("\n");
-  // Serial.print("Time:\t");
-  // Serial.print(millis());
-  /*
-  Serial.print("\t State:\t");
-  Serial.print(state);
-  //Serial.print(",");
-  Serial.print("\t ,MA_Cmd:\t");
-  Serial.print(DC_MotorA_SpeedCommand);
-  //Serial.print(",");
-  Serial.print("\t ,MA_Fb:\t");
-  Serial.print(DC_MotorA_SpeedFeedback);
-  //Serial.print(",");
-  Serial.print("\t ,MA_PWM:\t");
-  Serial.print(ControlLoop_Y.DC_MotorA_PWM);
-  //Serial.print(",");
-  Serial.print("\t ,MB_Cmd:\t");
-  Serial.print(DC_MotorB_SpeedCommand);
-  //Serial.print(",");
-  Serial.print("\t ,MB_Fb:\t");
-  Serial.print(DC_MotorB_SpeedFeedback);
-  //Serial.print(",");
-  Serial.print("\t ,MB_PWM:\t");
-  Serial.print(ControlLoop_Y.DC_MotorB_PWM);
-  */
-  // Serial.print("\t ,DistA:\t");
-  // Serial.print(UltrasoundDistanceA);
-  // Serial.print("\t ,ServoA_O:\t");
-  // Serial.print(ServoMotorA_Angle);
+// Serial.print("\n");
+// Serial.print("Time:\t");
+// Serial.print(millis());
+/*
+Serial.print("\t State:\t");
+Serial.print(state);
+//Serial.print(",");
+Serial.print("\t ,MA_Cmd:\t");
+Serial.print(DC_MotorA_SpeedCommand);
+//Serial.print(",");
+Serial.print("\t ,MA_Fb:\t");
+Serial.print(DC_MotorA_SpeedFeedback);
+//Serial.print(",");
+Serial.print("\t ,MA_PWM:\t");
+Serial.print(ControlLoop_Y.DC_MotorA_PWM);
+//Serial.print(",");
+Serial.print("\t ,MB_Cmd:\t");
+Serial.print(DC_MotorB_SpeedCommand);
+//Serial.print(",");
+Serial.print("\t ,MB_Fb:\t");
+Serial.print(DC_MotorB_SpeedFeedback);
+//Serial.print(",");
+Serial.print("\t ,MB_PWM:\t");
+Serial.print(ControlLoop_Y.DC_MotorB_PWM);
+*/
+// Serial.print("\t ,DistA:\t");
+// Serial.print(UltrasoundDistanceA);
+// Serial.print("\t ,ServoA_O:\t");
+// Serial.print(ServoMotorA_Angle);
 
-  /*
-  Serial.print("DistA:");
-  Serial.print(UltrasoundDistanceA);
-  Serial.print("DistB:");
-  Serial.print(LidarDistanceA);
-  Serial.print(",ServoA_O:");
-  Serial.print(ServoMotorA_Angle);
+/*
+Serial.print("DistA:");
+Serial.print(UltrasoundDistanceA);
+Serial.print("DistB:");
+Serial.print(LidarDistanceA);
+Serial.print(",ServoA_O:");
+Serial.print(ServoMotorA_Angle);
 */
 
-  // Serial.print("\t, State:");
-  // Serial.print(state);
+// Serial.print("\t, State:");
+// Serial.print(state);
 
-  // Serial.print("\t,CurrentAngle:");
-  // Serial.print(RoverGlobalDirection * 180 / 3.14159);
+// Serial.print("\t,CurrentAngle:");
+// Serial.print(RoverGlobalDirection * 180 / 3.14159);
 
-  // Serial.print("\t,Current Location, X:");
-  // Serial.print(RoverGlobalCoordX);
+// Serial.print("\t,Current Location, X:");
+// Serial.print(RoverGlobalCoordX);
 
-  // Serial.print(", Y:");
-  // Serial.print(RoverGlobalCoordY);
+// Serial.print(", Y:");
+// Serial.print(RoverGlobalCoordY);
 
-  // Serial.print("\t, Target X:");
-  // Serial.print(StateflowBlock_Y.PointX);
+// Serial.print("\t, Target X:");
+// Serial.print(StateflowBlock_Y.PointX);
 
-  // Serial.print(", Y:");
-  // Serial.print(StateflowBlock_Y.PointY);
+// Serial.print(", Y:");
+// Serial.print(StateflowBlock_Y.PointY);
 
-  // for(int i=0;i<180;i++)
-  //{
-  //   Serial.print("\t");
-  //   Serial.print(ForwardDistanceArray[i]);
-  // }
+// for(int i=0;i<180;i++)
+//{
+//   Serial.print("\t");
+//   Serial.print(ForwardDistanceArray[i]);
+// }
 
-  ////============Print a message if either timer timeout (couldn't finish the code before next interrupt)//
-  //  100% means the interrupt function will NOT have enough time to execute
-  // PrintIfTimerTimeout();   // You can comment out this one during your test. Just print this from time to time to make sure your code doesn't overload the micro processor
-  //================================================================================//
+////============Print a message if either timer timeout (couldn't finish the code before next interrupt)//
+//  100% means the interrupt function will NOT have enough time to execute
+// PrintIfTimerTimeout();   // You can comment out this one during your test. Just print this from time to time to make sure your code doesn't overload the micro processor
+//================================================================================//
+#ifdef USE_RASPBERRY_PI
+  RoverGlobalMsg.processingTick();
+#endif
 }
 
 // Try not to print anything in the below function,
@@ -276,14 +280,13 @@ void InterruptFunction2() // Middle Priority, Called by Timer 3
   // LidarDistanceA = myLIDAR.getDistance();
 #endif
 
-#ifdef USE_RASPBERRY_PI
-  RoverGlobalMsg.processingTick();
-#endif
+  // #ifdef USE_RASPBERRY_PI
+  //   RoverGlobalMsg.processingTick();
+  // #endif
   return;
 }
 void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used for state machine, navigation logic, etc
 {                         // This function runs at 10 Hz, used for strategy, navigation...
-
   // delay(60);
   //========================Feed the input signals==================================//
   StateflowBlock_U.accel_button_in = !digitalRead(ACCEL_BUTTON);
