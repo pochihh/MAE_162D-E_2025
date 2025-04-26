@@ -27,7 +27,10 @@ try:
 
         # Receive data
         if ser.in_waiting > 0:
-            data = ser.readline().decode('utf-8').strip()
+            # data = ser.readline().decode('utf-8').strip()
+            # print(f"Received: {data}")
+            # the date will not be in the form of string, so we need to read the data as bytes
+            data = ser.read(ser.in_waiting)
             print(f"Received: {data}")
 
         time.sleep(1)
