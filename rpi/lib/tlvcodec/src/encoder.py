@@ -51,9 +51,9 @@ class Encoder:
         index = self.frameHeader.numTotalBytes.value
         length2add = self.tlvHeader.tlvLen
         
-        # self.buffer[index:index+length2add] = ctypes.string_at(id(value), length2add)
-        self.buffer[index:index+length2add] = ctypes.string_at(ctypes.addressof(value), length2add)
-        self.frameHeader.numTotalBytes.value += length2add
+        if length2add > 0:
+            self.buffer[index:index+length2add] = ctypes.string_at(ctypes.addressof(value), length2add)
+            self.frameHeader.numTotalBytes.value += length2add
     
         # update the number of tlvs
         self.frameHeader.numTlvs += 1

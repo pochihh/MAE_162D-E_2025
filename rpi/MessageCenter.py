@@ -87,4 +87,4 @@ class MessageCenter:
     def add_no_object_detected(self):
         if self.debug:
             print("No object detected")
-        self.add_message(NO_OBJECT_DETECTED, 0, None)
+        self.add_message(NO_OBJECT_DETECTED, 0, 0)
