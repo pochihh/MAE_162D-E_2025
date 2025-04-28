@@ -68,19 +68,17 @@ class MessageCenter:
         # create a ctypes structure for the bounding box (4 int) and confidence (1 float)
         class BBox(ctypes.Structure):
             _fields_ = [("x", ctypes.c_int), ("y", ctypes.c_int), ("w", ctypes.c_int), ("h", ctypes.c_int)]
-        class Confidence(ctypes.Structure):
-            _fields_ = [("confidence", ctypes.c_float)]
         
         class Detection(ctypes.Structure):
-            _fields_ = [("object", ctypes.c_int), ("bbox", BBox), ("confidence", Confidence)]
+            _fields_ = [("object", ctypes.c_int), ("bbox", BBox), ("confidence", ctypes.c_float)]
         
         detection = Detection()
-        detection.object = object
-        detection.bbox.x = bbox[0] 
-        detection.bbox.y = bbox[1]
-        detection.bbox.w = bbox[2]
-        detection.bbox.h = bbox[3]
-        detection.confidence.confidence = confidence
+        detection.object = ctypes.c_int(object)
+        detection.bbox.x = ctypes.c_int(bbox.x)
+        detection.bbox.y = ctypes.c_int(bbox.y)
+        detection.bbox.w = ctypes.c_int(bbox.w)
+        detection.bbox.h = ctypes.c_int(bbox.h)
+        detection.confidence = ctypes.c_float(confidence)
         
         self.add_message(STOP_SIGN, ctypes.sizeof(detection), detection)
         
