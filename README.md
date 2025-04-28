@@ -24,14 +24,14 @@ Tutorial material for MAE 162D/E Winter and Spring quarter 2025
    - Select OS: Raspberry Pi OS (64-bits).
    - Select the SD card.
  
-   ![Imager Advanced Options](/images/step1.png)
+   ![Imager Advanced Options](/doc/images/step1.png)
 
 2. **Advanced Options**
      - Click "EDIT SETTINGS" and setup the Wireless LAN and SSH as follow.
 
-    ![EDIT SETTINGS](/images/step2.png)
-    ![Some Parameters](/images/step3.png)
-    ![SSH](/images/step4.png)
+    ![EDIT SETTINGS](/doc/images/step2.png)
+    ![Some Parameters](/doc/images/step3.png)
+    ![SSH](/doc/images/step4.png)
 
 3. **Flash the SD card**
     - Click "SAVE" and start flashing the SD card.
