@@ -5,6 +5,7 @@ import ctypes, struct
 import time
 import tty
 import termios
+import argparse
 
 # Package imports
 import cv2
@@ -13,17 +14,23 @@ import cv2
 from utils import *
 from yolo_utils import *
 from gps_utils import *
-from lib.tlvcodec import Encoder, Decoder
+from MessageCenter import MessageCenter
 
-def image_processing():
-    # print("Running image processing...")
+def image_processing(message_center):
     frame = picam2.capture_array()
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     
     # Object detection
+    # objects: crosswalk, speedlimit, stop, trafficlight
     outputs = convert_to_blob(frame, network, 128, 128)    
     bounding_boxes, class_objects, confidence_probs = object_detection(outputs, frame, 0.5)   
-
+    
+    if bounding_boxes is not None:
+        for i in range(len(bounding_boxes)):
+            message_center.add_yolo_detection(class_objects[i], bounding_boxes[i], confidence_probs[i])  # Commented out as add_stop_sign is not defined
+    else:
+        message_center.add_no_object_detected()
+        
 def gps_processing(): 
     data, addr = sock.recvfrom(1024)
     line = data.decode().strip()
@@ -36,16 +43,26 @@ def gps_processing():
     position, error = trilaterate_2D(distances_m)
     # if position is not None:
     #     print(f"[POS] x = {position[0]:.2f} ft, y = {position[1]:.2f} ft, RMSE = {error:.2f} ft")
-            
-def algorign_processing():
-    # print("Running algorithm processing...")
-    pass
 
 def main():
-    # Welcome message
-    print_seal()
+    # parse command line arguments
+    parser = argparse.ArgumentParser(description="My program with options")
+    parser.add_argument("-gps", "--gps", type=bool, default=False, help="Enable GPS in the program")
+    parser.add_argument("-d", "--debug", type=bool, default=False, help="Enable debug mode, printing debug messages")
+    args = parser.parse_args()
+    
+    # initialize the camera and GPS
     camera_initialization()
-    gps_initialization()
+    
+    # initialize gps if enabled
+    if args.gps:
+        gps_initialization()
+    
+    # initialize the message center
+    message_center = MessageCenter('/dev/ttyUSB0', 9600, args.debug)
+    
+    # Welcome message :)
+    print_seal()
     
     # system start time 
     program_start_time = time.time()
@@ -55,10 +72,15 @@ def main():
     try:
         tty.setcbreak(fd)  # or tty.setraw(fd)
         while True:
-            image_processing()
-            # gps_processing()
-            algorign_processing()
+            image_processing(message_center)
             
+            if args.gps:
+                gps_processing()
+            
+            # process messages
+            message_center.processing_tick()
+            
+            # handle user input
             if select.select([sys.stdin], [], [], 0)[0]:
                 ch = sys.stdin.read(1)
                 # print(f"You typed: {ch}")
