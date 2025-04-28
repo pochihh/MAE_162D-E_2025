@@ -71,10 +71,10 @@ class MessageCenter:
         
         detection = Detection()
         detection.object = ctypes.c_int(object)
-        detection.bbox.x = ctypes.c_int(bbox.x)
-        detection.bbox.y = ctypes.c_int(bbox.y)
-        detection.bbox.w = ctypes.c_int(bbox.w)
-        detection.bbox.h = ctypes.c_int(bbox.h)
+        detection.bbox.x = ctypes.c_int(bbox[0])
+        detection.bbox.y = ctypes.c_int(bbox[1])
+        detection.bbox.w = ctypes.c_int(bbox[2])
+        detection.bbox.h = ctypes.c_int(bbox[3])
         detection.confidence = ctypes.c_float(confidence)
         
         if self.debug:
