@@ -47,8 +47,8 @@ def gps_processing():
 def main():
     # parse command line arguments
     parser = argparse.ArgumentParser(description="My program with options")
-    parser.add_argument("-gps", "--gps", type=bool, default=False, help="Enable GPS in the program")
-    parser.add_argument("-d", "--debug", type=bool, default=False, help="Enable debug mode, printing debug messages")
+    parser.add_argument("-gps", "--gps", action='store_true', default=False, help="Enable GPS in the program")
+    parser.add_argument("-d", "--debug", action='store_true', default=False, help="Enable debug mode, printing debug messages")
     args = parser.parse_args()
     
     # initialize the camera and GPS

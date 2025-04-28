@@ -61,6 +61,7 @@ class MessageCenter:
         self.messageCount += 1
         
     def add_yolo_detection(self, object, bbox, confidence):
+        """Add a YOLO detection message to the encoder."""
         # create a ctypes structure for the bounding box (4 int) and confidence (1 float)
         class BBox(ctypes.Structure):
             _fields_ = [("x", ctypes.c_int), ("y", ctypes.c_int), ("w", ctypes.c_int), ("h", ctypes.c_int)]
@@ -78,7 +79,11 @@ class MessageCenter:
         detection.bbox.h = bbox[3]
         detection.confidence.confidence = confidence
         
+        if self.debug:
+            print(f"Detection: {detection.object}, BBox: ({detection.bbox.x}, {detection.bbox.y}, {detection.bbox.w}, {detection.bbox.h}), Confidence: {detection.confidence.confidence}")
         self.add_message(STOP_SIGN, ctypes.sizeof(detection), detection)
         
     def add_no_object_detected(self):
+        if self.debug:
+            print("No object detected")
         self.add_message(NO_OBJECT_DETECTED, 0, None)
