@@ -25,7 +25,7 @@ def image_processing(message_center):
     outputs = convert_to_blob(frame, network, 128, 128)    
     bounding_boxes, class_objects, confidence_probs = object_detection(outputs, frame, 0.5)   
     
-    if bounding_boxes is not None:
+    if len(bounding_boxes) > 0:
         for i in range(len(bounding_boxes)):
             message_center.add_yolo_detection(class_objects[i], bounding_boxes[i], confidence_probs[i])  # Commented out as add_stop_sign is not defined
     else:
