@@ -81,11 +81,12 @@ class MessageCenter:
         detection.confidence = ctypes.c_float(confidence)
         
         if self.debug:
-            print(f"Detection: {detection.object}, BBox: ({detection.bbox.x}, {detection.bbox.y}, {detection.bbox.w}, {detection.bbox.h}), Confidence: {detection.confidence.confidence}")
+            print(f"Detection: {detection.object}, BBox: ({detection.bbox.x}, {detection.bbox.y}, {detection.bbox.w}, {detection.bbox.h}), Confidence: {detection.confidence}")
     
         self.add_message(STOP_SIGN, ctypes.sizeof(detection), detection)
         
     def add_no_object_detected(self):
         if self.debug:
             print("No object detected")
-        self.add_message(NO_OBJECT_DETECTED, 0, 0)
+        # don't send anything for now
+        # self.add_message(NO_OBJECT_DETECTED, 0, 0)
