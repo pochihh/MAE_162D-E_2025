@@ -124,7 +124,17 @@ def load_video(video_path):
     
     return cap_video
 
-
+def sort_by_confidence(num2keep, confidence_probs, bounding_boxes, class_objects):
+    """ This function will sort the detected objects by confidence and only keep the best ones"""    
+    # sort the indices of the confidence probabilities
+    indices = np.argsort(confidence_probs)[::-1][:num2keep]
+    
+    # sort the bounding boxes and class objects by confidence
+    bounding_boxes = [bounding_boxes[i] for i in indices]
+    class_objects = [class_objects[i] for i in indices]
+    confidence_probs = [confidence_probs[i] for i in indices]
+    
+    return bounding_boxes, class_objects, confidence_probs
 
 picam2 = Picamera2()
 classNames = read_classes('./obj.names')

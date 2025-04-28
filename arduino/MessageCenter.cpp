@@ -1,8 +1,4 @@
-#include <stdint.h>
-#include <stdlib.h>
-#include <Arduino.h>
-
-#define __DEBUG__
+#include "stdafx.h"
 
 // c lib for TLV codec
 extern "C"
@@ -80,7 +76,7 @@ MessageCenter::MessageCenter()
     initEncodeDescriptor(&encoder, 256, DEVICE_ID, true);
 
     // Initialize the decoder; use the callback function to decode the message
-    initDecodeDescriptor(&decoder, 256, true, &decodeCallback);
+    initDecodeDescriptor(&decoder, 512, true, &decodeCallback);
 }
 
 MessageCenter::~MessageCenter()
