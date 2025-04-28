@@ -48,6 +48,8 @@ def object_detection(outputs, input_frame, confidenceThreshold):
                 # we're converting the coordinates to int because OpenCV doesn't allow floats for bounding boxes
                 x = int(x - (w/2))
                 y = int(y - (h/2))
+                w = int(w)
+                h = int(h)
                 
                 # adding the good detected boxe in the bounding boxes list created
                 bounding_boxes.append([x,y,w,h])                
