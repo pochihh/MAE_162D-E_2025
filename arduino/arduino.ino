@@ -137,74 +137,12 @@ void setup()
   DC_MotorInit();
   Serial.println("Initializing Message Center...");
   RoverGlobalMsg.init();
+  Serial.println("Program started.");
 }
 
 void loop() // Nonreal time loop, keep running but will be interrupted anytime
 {
 // put your main code here, to run repeatedly:
-
-// Serial.print("\n");
-// Serial.print("Time:\t");
-// Serial.print(millis());
-/*
-Serial.print("\t State:\t");
-Serial.print(state);
-//Serial.print(",");
-Serial.print("\t ,MA_Cmd:\t");
-Serial.print(DC_MotorA_SpeedCommand);
-//Serial.print(",");
-Serial.print("\t ,MA_Fb:\t");
-Serial.print(DC_MotorA_SpeedFeedback);
-//Serial.print(",");
-Serial.print("\t ,MA_PWM:\t");
-Serial.print(ControlLoop_Y.DC_MotorA_PWM);
-//Serial.print(",");
-Serial.print("\t ,MB_Cmd:\t");
-Serial.print(DC_MotorB_SpeedCommand);
-//Serial.print(",");
-Serial.print("\t ,MB_Fb:\t");
-Serial.print(DC_MotorB_SpeedFeedback);
-//Serial.print(",");
-Serial.print("\t ,MB_PWM:\t");
-Serial.print(ControlLoop_Y.DC_MotorB_PWM);
-*/
-// Serial.print("\t ,DistA:\t");
-// Serial.print(UltrasoundDistanceA);
-// Serial.print("\t ,ServoA_O:\t");
-// Serial.print(ServoMotorA_Angle);
-
-/*
-Serial.print("DistA:");
-Serial.print(UltrasoundDistanceA);
-Serial.print("DistB:");
-Serial.print(LidarDistanceA);
-Serial.print(",ServoA_O:");
-Serial.print(ServoMotorA_Angle);
-*/
-
-// Serial.print("\t, State:");
-// Serial.print(state);
-
-// Serial.print("\t,CurrentAngle:");
-// Serial.print(RoverGlobalDirection * 180 / 3.14159);
-
-// Serial.print("\t,Current Location, X:");
-// Serial.print(RoverGlobalCoordX);
-
-// Serial.print(", Y:");
-// Serial.print(RoverGlobalCoordY);
-
-// Serial.print("\t, Target X:");
-// Serial.print(StateflowBlock_Y.PointX);
-
-// Serial.print(", Y:");
-// Serial.print(StateflowBlock_Y.PointY);
-
-// for(int i=0;i<180;i++)
-//{
-//   Serial.print("\t");
-//   Serial.print(ForwardDistanceArray[i]);
-// }
 
 ////============Print a message if either timer timeout (couldn't finish the code before next interrupt)//
 //  100% means the interrupt function will NOT have enough time to execute
