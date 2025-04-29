@@ -254,9 +254,6 @@ void parseFrame(struct TlvDecodeDescriptor *descriptor)
         descriptor->tlvHeaders[i] = *(struct TlvHeader *)(descriptor->buffer + descriptor->ofst);
         descriptor->ofst += sizeof(struct TlvHeader);
 
-        // add data pointer
-        descriptor->tlvData[i] = descriptor->buffer + descriptor->ofst;
-
         // check if the tlv length is valid
         if (descriptor->tlvHeaders[i].tlvLen > descriptor->frameHeader.numTotalBytes.value - descriptor->ofst)
         {
@@ -266,10 +263,18 @@ void parseFrame(struct TlvDecodeDescriptor *descriptor)
                 descriptor->callback(&descriptor->errorCode, &descriptor->frameHeader, NULL, NULL);
             }
             return;
+        }else{
+            // valid tlv length; add data pointer for output
+            descriptor->tlvData[i] = descriptor->buffer + descriptor->ofst;
+            descriptor->ofst += descriptor->tlvHeaders[i].tlvLen;
         }
     }
+
     // all the tlv headers and data are valid; send result
-    descriptor->callback(&descriptor->errorCode, &descriptor->frameHeader, descriptor->tlvHeaders, descriptor->tlvData);
+    if (descriptor->callback != NULL)
+    {
+        descriptor->callback(&descriptor->errorCode, &descriptor->frameHeader, descriptor->tlvHeaders, descriptor->tlvData);
+    }
 
     return;
 }

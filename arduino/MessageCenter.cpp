@@ -9,6 +9,8 @@ extern "C"
 #include "MessageCenter.h"
 
 extern MessageCenter RoverGlobalMsg;
+extern int StopSignDetected; // Indicate that the stop sign is detected
+extern float StopSignDetectedConfidence; // Indicate the confidence of the stop sign detection
 
 void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvHeader *tlvHeaders, uint8_t **tlvData)
 {
@@ -20,13 +22,17 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
         {
             switch (tlvHeaders[i].tlvType)
             {
-            case STOP_SIGN_DETECTION:
-                // Handle stop sign detection
-
-                break;
-            case TRAFFIC_LIGHT_DETECTION:
-                // Handle traffic light detection
-
+            case YOLO_OBJECT_DETECTED:
+                Detection det = *(Detection *)tlvData[i];
+                if (det.object == 2){
+                    // stop sign detected
+                    // add to global variable
+                    StopSignDetected++;
+                    if (det.confidence > StopSignDetectedConfidence)
+                    {
+                        StopSignDetectedConfidence = det.confidence;
+                    }
+                }
                 break;
             default:
                 // do nothing
@@ -39,13 +45,15 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
         {
             switch (tlvHeaders[i].tlvType)
             {
-            case STOP_SIGN_DETECTION:
-                // Handle stop sign detection
-                Serial.println("Stop sign detected");
-                break;
-            case TRAFFIC_LIGHT_DETECTION:
-                // Handle traffic light detection
-                Serial.println("Traffic light detected");
+            case YOLO_OBJECT_DETECTED:
+                // Handle object detection
+                Detection det = *(Detection *)tlvData[i];
+                
+                // Process the detected object
+                Serial.print("Detected object: ");
+                Serial.print(det.object);
+                Serial.print(", Confidence: ");
+                Serial.println(det.confidence);
                 break;
             default:
                 Serial.print("Unknown TLV type: ");
@@ -66,6 +74,8 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
 #ifdef __DEBUG__
         Serial.print("Error decoding message: ");
         Serial.println(*error);
+        Serial.print("total bytes: ");
+        Serial.println(frameHeader->numTotalBytes.value);
 #endif
     }
 }

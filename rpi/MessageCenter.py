@@ -6,8 +6,7 @@ import struct
 import sys
 
 NO_OBJECT_DETECTED = 100
-STOP_SIGN = 101
-TRAFFIC_LIGHT = 102
+YOLO_OBJECT_DETECTED = 101
 
 class MessageCenter:
     def __init__(self, serial_port, baudrate=9600, debug=False):
@@ -83,7 +82,7 @@ class MessageCenter:
         if self.debug:
             print(f"Detection: {detection.object}, BBox: ({detection.bbox.x}, {detection.bbox.y}, {detection.bbox.w}, {detection.bbox.h}), Confidence: {detection.confidence}")
     
-        self.add_message(STOP_SIGN, ctypes.sizeof(detection), detection)
+        self.add_message(YOLO_OBJECT_DETECTED, ctypes.sizeof(detection), detection)
         
     def add_no_object_detected(self):
         if self.debug:

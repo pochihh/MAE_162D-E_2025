@@ -79,6 +79,9 @@ boolean PurePursuitEnableBool;
 double DesiredRoverGlobalDirection = 0;
 double TargetDirection = 0;
 MessageCenter RoverGlobalMsg;
+int StopSignDetected = 0; // Indicate that the stop sign is detected
+float StopSignDetectedConfidence = 0.0; // Indicate the confidence of the stop sign detection
+
 // boolean NewSweeping = 0; // Indicate that the scanned data is new.
 
 #define ledPin 13
@@ -301,6 +304,8 @@ void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used
   StateflowBlock_U.RoverGlobalDirection = RoverGlobalDirection;
   StateflowBlock_U.RoverGlobalCoordX = RoverGlobalCoordX;
   StateflowBlock_U.RoverGlobalCoordY = RoverGlobalCoordY;
+  StateflowBlock_U.StopSignDetected = StopSignDetected;
+  StateflowBlock_U.StopSignDetectedConfidence = StopSignDetectedConfidence;
 
   //================================================================================//
 
@@ -322,6 +327,12 @@ void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used
   PurePursuitVel = StateflowBlock_Y.PurePursuitVel;
   PurePursuitOmega = StateflowBlock_Y.PurePursuitOmega;
   PurePursuitEnableBool = StateflowBlock_Y.PurePursuitEnableBool;
+
+  if (StateflowBlock_Y.StopFinished == 1.0)
+  {
+    StopSignDetected = 0;
+    StopSignDetectedConfidence = 0.0;
+  }
   //================================================================================//
 
   return;

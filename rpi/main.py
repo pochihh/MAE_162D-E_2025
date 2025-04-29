@@ -70,6 +70,7 @@ def main():
     
     # system start time 
     program_start_time = time.time()
+    time_stamp = program_start_time
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
 
@@ -96,9 +97,12 @@ def main():
                     
             # delay for a short period to avoid busy waiting
             time.sleep(0.1)
-            # print time elapsed since start without newline
-            print(f"\rTime elapsed: {get_time_millis(program_start_time):.2f} ms", end="")
-            print("\b" * 30, end="")  # Clear the line
+            
+            # print time elapsed since start and time interval without newline
+            interval = get_time_millis(time.time() - time_stamp)
+            time_stamp = time.time()
+            print(f"\rTime elapsed: {get_time_millis(program_start_time):.2f} ms; loop interval: {interval:.02f} ms", end="")
+            print("\b" * 40, end="")  # Clear the line
             
     except KeyboardInterrupt:
         print("Keyboard interrupt detected. Exiting...")
