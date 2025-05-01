@@ -32,6 +32,7 @@ class MessageCenter:
                 
                 
     def processing_tick(self):
+        """To be called every tick to process input and output messages."""
         # read data from serial port and decode it
         if self.serial.in_waiting > 0:
             data = self.serial.read(self.serial.in_waiting)

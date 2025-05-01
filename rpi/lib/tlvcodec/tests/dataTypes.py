@@ -11,7 +11,7 @@ class DataType(Enum):
     UINT32 = 2
 
     # Custom type
-    CUSTOM_TYPE_1 = 253
+    CUSTOM_TYPE_1 = 101
     CUSTOM_TYPE_2 = 254
     CUSTOM_TYPE_3 = 255
 

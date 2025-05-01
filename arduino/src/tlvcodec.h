@@ -1,3 +1,10 @@
+/*
+ * Developed by Toby Chen, con mucho amor <3
+ * Author Email: pc.toby.chen@gmail.com
+ * Date: May 1, 2025
+ * License: MIT
+ */
+
 #ifndef TLV_CODEC_H
 #define TLV_CODEC_H
 #include <stdbool.h>

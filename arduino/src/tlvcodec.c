@@ -1,4 +1,10 @@
-// implemt the tlv decoder in c
+/*
+ * Developed by Toby Chen, con mucho amor <3
+ * Author Email: pc.toby.chen@gmail.com
+ * Date: May 1, 2025
+ * License: MIT
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tlvcodec.h"

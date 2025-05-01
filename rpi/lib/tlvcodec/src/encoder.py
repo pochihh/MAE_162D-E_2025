@@ -1,6 +1,9 @@
-# Author: Toby Chen
-# Created: 2025-02-24
-# Desctiption: This file contains the encoder class for the TLV codec.
+"""
+Developed by Toby Chen, con mucho amor <3
+Author Email: pc.toby.chen@gmail.com
+Date: May 1, 2025
+License: MIT
+"""
 
 ## The TLV encoder class ##
 # The encoder is used to encode the data into the TLV format
@@ -9,7 +12,7 @@
 # The frame header is fixed and contains the device ID, frame number, and the number of TLV packets in the frame.
 # The deviceId specifies the device that sends the data; the frame is incremented for each data frame encoded.
 # The TLV packets are encoded with the type, length, and value., where the type specifies the type of the data, the length specifies the length of the data, and the value specifies the actual data.
-# The length of the whole data frame will be rounded up to the nearest 4 bytes when the data frame is encoded.
+# The length of the whole data frame will be rounded up to the nearest 8 bytes when the data frame is encoded.
 
 import ctypes
 from .utils import *
