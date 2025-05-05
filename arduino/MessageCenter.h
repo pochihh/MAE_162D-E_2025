@@ -7,13 +7,9 @@
 // define the TLV types
 #define NO_OBJECT_DETECTED 100
 #define YOLO_OBJECT_DETECTED 101
+#define GPS_XY_COORDINATE 110
 
-// class BBox(ctypes.Structure):
-// _fields_ = [("x", ctypes.c_int), ("y", ctypes.c_int), ("w", ctypes.c_int), ("h", ctypes.c_int)]
-
-// class Detection(ctypes.Structure):
-// _fields_ = [("object", ctypes.c_int), ("bbox", BBox), ("confidence", ctypes.c_float)]
-
+// detection object types for YOLO_OBJECT_DETECTED (101)
 struct Detection
 {
     int32_t object;
@@ -25,6 +21,13 @@ struct Detection
         int32_t h;
     } bbox;
     float confidence;
+};
+
+// gps coordinate types for GPS_XY_COORDINATE (110)
+struct gps_xy_coordinate
+{
+    float x;
+    float y;
 };
 
 // MessageCenter class

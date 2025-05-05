@@ -11,6 +11,8 @@ extern "C"
 extern MessageCenter RoverGlobalMsg;
 extern int StopSignDetected; // Indicate that the stop sign is detected
 extern float StopSignDetectedConfidence; // Indicate the confidence of the stop sign detection
+extern float RoverGlobalCoordX; // GPS x coordinate
+extern float RoverGlobalCoordY; // GPS y coordinate
 
 void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvHeader *tlvHeaders, uint8_t **tlvData)
 {
@@ -23,6 +25,16 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
             switch (tlvHeaders[i].tlvType)
             {
             case YOLO_OBJECT_DETECTED:
+                
+                // tlv length error check
+                if (tlvHeaders[i].tlvLen != sizeof(Detection))
+                {
+                    // log error result to a global variable
+                    *error = TlvLenError;
+                    return;
+                } 
+
+                // copy the data to a local variable
                 Detection det = *(Detection *)tlvData[i];
                 if (det.object == 2){
                     // stop sign detected
@@ -33,6 +45,20 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                         StopSignDetectedConfidence = det.confidence;
                     }
                 }
+                break;
+            case GPS_XY_COORDINATE:
+                // tlv length error check
+                if (tlvHeaders[i].tlvLen != sizeof(gps_xy_coordinate))
+                {
+                    // log error result to a global variable
+                    *error = TlvLenError;
+                    return;
+                }
+
+                gps_xy_coordinate gps_coord = *(gps_xy_coordinate *)tlvData[i];
+                // Process the GPS coordinates
+                RoverGlobalCoordX = gps_coord.x;
+                RoverGlobalCoordY = gps_coord.y;
                 break;
             default:
                 // do nothing

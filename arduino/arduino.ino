@@ -81,6 +81,8 @@ double TargetDirection = 0;
 MessageCenter RoverGlobalMsg;
 int StopSignDetected = 0; // Indicate that the stop sign is detected
 float StopSignDetectedConfidence = 0.0; // Indicate the confidence of the stop sign detection
+float RoverGlobalCoordX = 0.0; // GPS x coordinate
+float RoverGlobalCoordY = 0.0; // GPS y coordinate
 
 // boolean NewSweeping = 0; // Indicate that the scanned data is new.
 
@@ -244,7 +246,8 @@ void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used
   StateflowBlock_U.RoverGlobalCoordY = RoverGlobalCoordY;
   StateflowBlock_U.StopSignDetected = StopSignDetected;
   StateflowBlock_U.StopSignDetectedConfidence = StopSignDetectedConfidence;
-
+  StateflowBlock_U.gps_x = RoverGlobalCoordX;
+  StateflowBlock_U.gps_y = RoverGlobalCoordY;
   //================================================================================//
 
   //==========================Run the simulink program=============================//

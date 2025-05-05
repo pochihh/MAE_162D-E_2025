@@ -7,6 +7,7 @@ import sys
 
 NO_OBJECT_DETECTED = 100
 YOLO_OBJECT_DETECTED = 101
+GPS_XY_COORDINATE = 110
 
 class MessageCenter:
     def __init__(self, serial_port, baudrate=9600, debug=False):
@@ -90,3 +91,18 @@ class MessageCenter:
             print("No object detected")
         # don't send anything for now
         # self.add_message(NO_OBJECT_DETECTED, 0, 0)
+    
+    def add_gps_position(self, x, y):
+        if self.debug:
+            print(f"Adding GPS position: ({x}, {y})")
+        
+        # create a ctypes structure for the GPS position (2 float)
+        class GpsPosition(ctypes.Structure):
+            _fields_ = [("x", ctypes.c_float), ("y", ctypes.c_float)]
+        
+        # copy data
+        gps_position = GpsPosition()
+        gps_position.x = ctypes.c_float(x)
+        gps_position.y = ctypes.c_float(y)
+        
+        self.add_message(YOLO_OBJECT_DETECTED, ctypes.sizeof(gps_position), gps_position)
