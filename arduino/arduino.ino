@@ -84,6 +84,7 @@ float StopSignDetectedConfidence = 0.0; // Indicate the confidence of the stop s
 float RoverGlobalCoordX = 0.0; // GPS x coordinate
 float RoverGlobalCoordY = 0.0; // GPS y coordinate
 bool TrafficLightStatus = 0; // 0: red, 1: green
+int FaceDetected = 0; // Indicate that the face is detected
 
 // boolean NewSweeping = 0; // Indicate that the scanned data is new.
 

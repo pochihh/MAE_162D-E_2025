@@ -33,8 +33,7 @@ class MessageCenter:
             for i in range(frameHeader.numTlvs):
                 if self.debug:
                     print(f'Type: {tlvs[i][0]}; length: {tlvs[i][1]}')
-                
-                
+                           
     def processing_tick(self):
         """To be called every tick to process input and output messages."""
         # read data from serial port and decode it
@@ -120,3 +119,17 @@ class MessageCenter:
         traffic_light_status.status = ctypes.c_bool(status)
         
         self.add_message(TRAFFIC_LIGHT_STATUS, ctypes.sizeof(traffic_light_status), traffic_light_status)
+
+    def add_face_detection(self, status):
+        if self.debug:
+            print(f"Adding face detection: {status}")
+        
+        # create a ctypes structure for the face detection status (1 int)
+        class FaceDetectionStatus(ctypes.Structure):
+            _fields_ = [("status", ctypes.c_int)]
+        
+        # copy data
+        face_detection_status = FaceDetectionStatus()
+        face_detection_status.status = ctypes.c_int(status)
+        
+        self.add_message(FACE_DETECTED, ctypes.sizeof(face_detection_status), face_detection_status)

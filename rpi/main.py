@@ -21,6 +21,9 @@ def image_processing(message_center):
     frame = picam2.capture_array()
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
+    gender = face_processing(frame)
+    message_center.add_face_detection(gender)
+
     # Object detection
     # objects: crosswalk, speedlimit, stop, trafficlight
     outputs = convert_to_blob(frame, network, 128, 128)
@@ -49,6 +52,32 @@ def image_processing(message_center):
     else:
         message_center.add_no_object_detected()
 
+def face_processing(frame):
+    h, w = frame.shape[:2]
+    blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), [104, 117, 123], True, False)
+
+    face_detector.setInput(blob)
+    detections = face_detector.forward()
+
+    # sort detections by confidence (from big to small)
+    detections = sorted(detections[0, 0, :, :], key=lambda x: x[2], reverse=True)
+    detection = detections[0]
+
+    if detection[2] > 0.7:
+        print("Face detected")
+        faceBox = detection[3:7] * np.array([w, h, w, h])
+        faceBox = faceBox.astype("int")
+
+        face_detector = frame[max(0, faceBox[1]-15):min(faceBox[3]+15, frame.shape[0]-1),
+                            max(0, faceBox[0]-15):min(faceBox[2]+15,frame.shape[1]-1)]
+        blob = cv2.dnn.blobFromImage(face_detector, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
+        gender_detector.setInput(blob)
+        genderPreds = gender_detector.forward()
+        gender = genderPreds[0].argmax() + 1 # 1 for male, 2 for female
+        return gender
+    else:
+        return 0 # no face detected
+            
 def gps_processing(message_center):
     data, addr = sock.recvfrom(1024)
     line = data.decode().strip()

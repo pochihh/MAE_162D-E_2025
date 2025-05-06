@@ -9,11 +9,12 @@ extern "C"
 #include "MessageCenter.h"
 
 extern MessageCenter RoverGlobalMsg;
-extern int StopSignDetected; // Indicate that the stop sign is detected
+extern int   StopSignDetected; // Indicate that the stop sign is detected
 extern float StopSignDetectedConfidence; // Indicate the confidence of the stop sign detection
 extern float RoverGlobalCoordX; // GPS x coordinate
 extern float RoverGlobalCoordY; // GPS y coordinate
 extern bool  TrafficLightStatus; // 0: red, 1: green
+extern int   FaceDetected; // Indicate that the face is detected
 
 void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvHeader *tlvHeaders, uint8_t **tlvData)
 {
@@ -73,6 +74,19 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 traffic_light_status = *(traffic_light_status *)tlvData[i];
                 // Process the GPS coordinates
                 TrafficLightStatus = traffic_light_status;
+                break;
+            case FACE_DETECTED:
+                // tlv length error check
+                if (tlvHeaders[i].tlvLen != sizeof(face_detected))
+                {
+                    // log error result to a global variable
+                    *error = TlvLenError;
+                    return;
+                }
+
+                face_detected = *(face_detected *)tlvData[i];
+                // Process the GPS coordinates
+                FaceDetected = face_detected;
                 break;
             default:
                 // do nothing

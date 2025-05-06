@@ -7,10 +7,9 @@
 // define the TLV types
 #define NO_OBJECT_DETECTED 100
 #define YOLO_OBJECT_DETECTED 101
-#define FACE_DETECTED = 102
-#define TRAFFIC_LIGHT_DETECTED = 103
+#define FACE_DETECTED 102
+#define TRAFFIC_LIGHT_STATUS 103
 #define GPS_XY_COORDINATE 110
-#define TRAFFIC_LIGHT_STATUS 111
 
 // detection object types for YOLO_OBJECT_DETECTED (101)
 struct Detection
@@ -35,6 +34,7 @@ struct gps_xy_coordinate
 
 // traffic light status types for TRAFFIC_LIGHT_STATUS (111)
 bool traffic_light_status = false; // 0: red, 1: green
+int face_detected = 0;
 
 // MessageCenter class
 class MessageCenter
