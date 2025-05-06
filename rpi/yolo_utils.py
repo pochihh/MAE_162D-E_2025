@@ -147,11 +147,4 @@ neural_net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 network = neural_net
 
 # initialize gender detection
-face_config = "./cfg/opencv_face_detector.pbtxt"
-face_model = "./cfg/opencv_face_detector_uint8.pb"
-gender_config  = "./cfg/gender_deploy.prototxt"
-gender_model  = "./cfg/gender_net.caffemodel"
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
-
-face_detector = cv2.dnn.readNet(face_model, face_config)
-gender_detector = cv2.dnn.readNet(gender_model, gender_config)

@@ -53,8 +53,12 @@ def image_processing(message_center):
         message_center.add_no_object_detected()
 
 def face_processing(frame):
-    h, w = frame.shape[:2]
+    h = frame.shape[0]
+    w = frame.shape[1]
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), [104, 117, 123], True, False)
+
+    face_detector = cv2.dnn.readNet('./cfg/opencv_face_detector_uint8.pb', './cfg/opencv_face_detector.pbtxt')
+    gender_detector = cv2.dnn.readNet('./cfg/gender_net.caffemodel', './cfg/gender_deploy.prototxt')
 
     face_detector.setInput(blob)
     detections = face_detector.forward()
@@ -113,7 +117,6 @@ def main():
 
     # initialize the camera and GPS
     camera_initialization()
-
     # initialize gps if enabled
     if args.gps:
         gps_initialization()
