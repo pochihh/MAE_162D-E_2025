@@ -13,6 +13,7 @@ extern int StopSignDetected; // Indicate that the stop sign is detected
 extern float StopSignDetectedConfidence; // Indicate the confidence of the stop sign detection
 extern float RoverGlobalCoordX; // GPS x coordinate
 extern float RoverGlobalCoordY; // GPS y coordinate
+extern bool  TrafficLightStatus; // 0: red, 1: green
 
 void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvHeader *tlvHeaders, uint8_t **tlvData)
 {
@@ -59,6 +60,19 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 // Process the GPS coordinates
                 RoverGlobalCoordX = gps_coord.x;
                 RoverGlobalCoordY = gps_coord.y;
+                break;
+            case TRAFFIC_LIGHT_STATUS:
+                // tlv length error check
+                if (tlvHeaders[i].tlvLen != sizeof(traffic_light_status))
+                {
+                    // log error result to a global variable
+                    *error = TlvLenError;
+                    return;
+                }
+
+                traffic_light_status = *(traffic_light_status *)tlvData[i];
+                // Process the GPS coordinates
+                TrafficLightStatus = traffic_light_status;
                 break;
             default:
                 // do nothing

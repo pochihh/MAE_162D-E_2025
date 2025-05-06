@@ -34,15 +34,22 @@ def image_processing(message_center):
     )
 
     if len(bounding_boxes) > 0:
-        for i in range(len(bounding_boxes)):
-            message_center.add_yolo_detection(
-                class_objects[i], bounding_boxes[i], confidence_probs[i]
-            )  # Commented out as add_stop_sign is not defined
+        message_center.add_yolo_detection(
+            class_objects[0], bounding_boxes[0], confidence_probs[0]
+        )
+        if class_objects[0] == 3:
+            print(f"[INFO] Detected traffic light")
+            status = False # red light =False, green light = True
+            
+            ## TODO: add traffic light detection logic here
+            ## ~~~
+            ## END TODO
+            
+            message_center.add_traffic_light(status)
     else:
         message_center.add_no_object_detected()
 
-
-def gps_processing():
+def gps_processing(message_center):
     data, addr = sock.recvfrom(1024)
     line = data.decode().strip()
 
@@ -52,9 +59,9 @@ def gps_processing():
         pass
 
     position, error = trilaterate_2D(distances_m)
-    # if position is not None:
-    #     print(f"[POS] x = {position[0]:.2f} ft, y = {position[1]:.2f} ft, RMSE = {error:.2f} ft")
-
+    if position is not None:
+        # print(f"[POS] x = {position[0]:.2f} ft, y = {position[1]:.2f} ft, RMSE = {error:.2f} ft")
+        message_center.add_gps_position(position[0], position[1])
 
 def main():
     # parse command line arguments
@@ -100,7 +107,7 @@ def main():
             image_processing(message_center)
 
             if args.gps:
-                gps_processing()
+                gps_processing(message_center)
 
             # process messages
             message_center.processing_tick()

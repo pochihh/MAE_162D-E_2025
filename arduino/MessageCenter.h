@@ -8,6 +8,7 @@
 #define NO_OBJECT_DETECTED 100
 #define YOLO_OBJECT_DETECTED 101
 #define GPS_XY_COORDINATE 110
+#define TRAFFIC_LIGHT_STATUS 111
 
 // detection object types for YOLO_OBJECT_DETECTED (101)
 struct Detection
@@ -29,6 +30,9 @@ struct gps_xy_coordinate
     float x;
     float y;
 };
+
+// traffic light status types for TRAFFIC_LIGHT_STATUS (111)
+bool traffic_light_status = false; // 0: red, 1: green
 
 // MessageCenter class
 class MessageCenter
