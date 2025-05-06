@@ -7,6 +7,8 @@
 // define the TLV types
 #define NO_OBJECT_DETECTED 100
 #define YOLO_OBJECT_DETECTED 101
+#define FACE_DETECTED = 102
+#define TRAFFIC_LIGHT_DETECTED = 103
 #define GPS_XY_COORDINATE 110
 
 // detection object types for YOLO_OBJECT_DETECTED (101)
