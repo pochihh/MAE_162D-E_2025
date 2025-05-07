@@ -71,9 +71,9 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                     return;
                 }
 
-                traffic_light_status = *(traffic_light_status *)tlvData[i];
-                // Process the GPS coordinates
-                TrafficLightStatus = traffic_light_status;
+                traffic_light_status light_status  = *(traffic_light_status *)tlvData[i];
+                // Process the traffic light
+                TrafficLightStatus = light_status.status;
                 break;
             case FACE_DETECTED:
                 // tlv length error check
@@ -84,9 +84,9 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                     return;
                 }
 
-                face_detected = *(face_detected *)tlvData[i];
-                // Process the GPS coordinates
-                FaceDetected = face_detected;
+                face_detected face_det = *(face_detected *)tlvData[i];
+                // Process the face detection results
+                FaceDetected = face_det.res;
                 break;
             default:
                 // do nothing

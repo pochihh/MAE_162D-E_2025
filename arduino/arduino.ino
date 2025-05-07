@@ -73,7 +73,7 @@ boolean KeepDistanceA_Enable_Bool = false;
 boolean ServoA_Sweeping_Enable_Bool = false;
 float ServoMotorA_Angle, ServoMotorB_Angle, ServoMotorC_Angle, ServoMotorD_Angle, ServoMotorE_Angle;
 double LidarDistanceA = 0;
-double RoverGlobalDirection, RoverGlobalCoordX, RoverGlobalCoordY;
+double RoverGlobalDirection;
 double PurePursuitVel, PurePursuitOmega;
 boolean PurePursuitEnableBool;
 double DesiredRoverGlobalDirection = 0;
@@ -251,6 +251,7 @@ void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used
   StateflowBlock_U.gps_x = RoverGlobalCoordX;
   StateflowBlock_U.gps_y = RoverGlobalCoordY;
   StateflowBlock_U.TrafficLightStatus = TrafficLightStatus;
+  StateflowBlock_U.FaceDetected = FaceDetected;
   //================================================================================//
 
   //==========================Run the simulink program=============================//

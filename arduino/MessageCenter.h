@@ -33,8 +33,19 @@ struct gps_xy_coordinate
 };
 
 // traffic light status types for TRAFFIC_LIGHT_STATUS (111)
-bool traffic_light_status = false; // 0: red, 1: green
-int face_detected = 0;
+struct traffic_light_status 
+{
+    bool status;
+};
+
+struct face_detected
+{
+    int res;
+};
+
+
+// bool traffic_light_status = false; // 0: red, 1: green
+// int face_detected = 0;
 
 // MessageCenter class
 class MessageCenter
