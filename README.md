@@ -1,95 +1,28 @@
 # MAE_162D-E_2025
-Tutorial material for MAE 162D/E Winter and Spring quarter 2025
+Demo project for MAE 162D/E Winter and Spring quarter 2025.
+The system includes a Raspberry Pi and an Arduino Mega 2560; instructions for them are listed below.
 
-# Raspberry Pi Setup Guide
+## How to Run on the Arduino
+- Under MAE_162D-E_2025/Arduino/src/
+- Open and run “SimulinkGenerate.m”
+- Select **Change Directory** if prompted
+- Generate the codes (For both ControlLoop and StateflowBlock)
+- Upload the code to the Arduino (aduino.ino)
+
+## How to run on the Raspberry Pi
+1. Install and set up your raspberry pi: See [here](doc/Raspberry_Pi_Setup_Guide.md)
+2. Set up and install required dependencies: See [here](doc/Raspberry_Pi_Dependencies.md)
+3. Download required model weights *(to be added)*
+4. Enter the **rpi/** folder and run the python code 
+    ```bash
+    cd rpi
+    ```
+    ```bash
+    python main.py [--debug] [--gps]
+    ```
+    - Option [-d/-\-debug]: Use this option to enter debug mode. There will be debug messages if this option is used. 
+    - Option [-gps/-\-gps]: Use this option to enable the gps. Ignore it if you don't need it.
+
 ---
-
-## Requirements
-🛒 **Hardware**:
-- Raspberry Pi (any model)
-- microSD card (16GB+ recommended)
-- microSD card reader
-
-
-🖥️ **Software**:
-- Raspberry Pi Imager: [Download Here](https://www.raspberrypi.com/software/)
-- Terminal / Command Prompt
-
----
-
-## Setup Steps
-1. **Flash OS onto SD Card**
-   - Download and open **Raspberry Pi Imager**.
-   - Select board: Raspberry Pi 5.
-   - Select OS: Raspberry Pi OS (64-bits).
-   - Select the SD card.
- 
-   ![Imager Advanced Options](/doc/images/step1.png)
-
-2. **Advanced Options**
-     - Click "EDIT SETTINGS" and setup the Wireless LAN and SSH as follow.
-
-    ![EDIT SETTINGS](/doc/images/step2.png)
-    ![Some Parameters](/doc/images/step3.png)
-    ![SSH](/doc/images/step4.png)
-
-3. **Flash the SD card**
-    - Click "SAVE" and start flashing the SD card.
-
-2. **Insert the SD Card and Power Up**
-   - Insert SD card into the Raspberry Pi.
-   - Connect the power supply.
-   - Wait a few minutes for it to boot.
-
-3. **SSH into Your Pi**
-   - Check your router’s connected devices by
-        ```bash
-        ssh {YOUR_USERNAME}@{YOUR_IP_ADDRESS}
-        ```
-
-4. **Setup your camera**
-    - Run the following command.
-        ```bash
-        sudo apt update
-        ```
-        ```bash 
-        sudo nano /boot/firmware/config.txt
-        ```
-    - Find the following line and then modify the value to 0.
-        ```
-        camera_auto_detect=1
-        ```
-    - Then, add these two lines to the end of the files.
-        ```
-        dtoverlay=imx708,cam0
-        dtoverlay=imx708,cam1
-        ```
-    - Save the file and then reboot your Rpi.
-
-5. **Test with your camera**
-    - Install [miniconda3](https://www.anaconda.com/docs/getting-started/miniconda/install#aws-graviton2-arm-64)
-        - Make sure you install the arm64 version!
-    - Clone the week2 repository
-        ```bash
-        git clone https://github.com/Kevin75311/UCLA_MAE162E_week2_materials.git
-        ```
-    - Run the following command and wait
-        ```bash
-        cd UCLA_MAE162E_week2_materials
-        ```
-        ```bash
-        bash install.sh
-        ```
-    - After finish installing, you can test your camera with the following commands
-        ```bash
-        conda activate week2_new
-        ```
-        ```bash
-        cd YOLOv4/
-        ```
-        ```bash
-        python main.py
-        ```
-
-
-    
+Some useful slides here:
+1. Communication: See [here](doc/162E%20Lec4%20Week%205%20Serial%20Communication.pdf)
