@@ -12,7 +12,7 @@ The system includes a Raspberry Pi and an Arduino Mega 2560; instructions for th
 ## How to run on the Raspberry Pi
 1. Install and set up your raspberry pi: See [here](doc/Raspberry_Pi_Setup_Guide.md)
 2. Set up and install required dependencies: See [here](doc/Raspberry_Pi_Dependencies.md)
-3. Download required model weights *(to be added)*
+3. Download required model weights: See [here](doc/Raspberry_Pi_Models.md)
 4. Enter the **rpi/** folder and run the python code 
     ```bash
     cd rpi
