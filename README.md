@@ -26,3 +26,6 @@ The system includes a Raspberry Pi and an Arduino Mega 2560; instructions for th
 ---
 Some useful slides here:
 1. Communication: See [here](doc/162E%20Lec4%20Week%205%20Serial%20Communication.pdf)
+
+---
+Latest FAQ: See [here](doc/Raspberry_Pi_FAQ.md)
