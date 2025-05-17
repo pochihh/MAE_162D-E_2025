@@ -16,13 +16,14 @@ from yolo_utils import *
 from gps_utils import *
 from MessageCenter import MessageCenter
 
-
-def image_processing(message_center):
+def image_processing(message_center: MessageCenter):
     frame = picam2.capture_array()
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
     gender = face_processing(frame)
-    message_center.add_face_detection(gender)
+    # send message only when a face is detected: 1 for male, 2 for female
+    if gender > 0:
+        message_center.add_face_detection(gender)
 
     # Object detection
     # objects: crosswalk, speedlimit, stop, trafficlight
@@ -42,15 +43,18 @@ def image_processing(message_center):
         )
         if class_objects[0] == 3:
             print(f"[INFO] Detected traffic light")
-            status = False # red light =False, green light = True
+            status = 0 # red light = 0, green light = 1
+            confidence = 0.0
             
             ## TODO: add traffic light detection logic here
             ## ~~~
             ## END TODO
             
-            message_center.add_traffic_light(status)
+            message_center.add_traffic_light(status, confidence)
     else:
-        message_center.add_no_object_detected()
+        pass
+        # just don't send anything for now
+        # message_center.add_no_object_detected()
 
 def face_processing(frame):
     h = frame.shape[0]

@@ -10,7 +10,6 @@ YOLO_OBJECT_DETECTED = 101
 FACE_DETECTED = 102
 TRAFFIC_LIGHT_DETECTED = 103
 GPS_XY_COORDINATE = 110
-TRAFFIC_LIGHT_STATUS = 111
 
 class MessageCenter:
     def __init__(self, serial_port, baudrate=9600, debug=False):
@@ -109,16 +108,17 @@ class MessageCenter:
         
         self.add_message(GPS_XY_COORDINATE, ctypes.sizeof(gps_position), gps_position)
 
-    def add_traffic_light(self, status):
+    def add_traffic_light(self, status, confidence):
         # create a ctypes structure for the traffic light status (1 int)
         class TrafficLightStatus(ctypes.Structure):
-            _fields_ = [("status", ctypes.c_bool)]
+            _fields_ = [("status", ctypes.c_int), ("confidence", ctypes.c_float)]
         
         # copy data
         traffic_light_status = TrafficLightStatus()
-        traffic_light_status.status = ctypes.c_bool(status)
+        traffic_light_status.status = ctypes.c_int(status)
+        traffic_light_status.confidence = ctypes.c_float(confidence)
         
-        self.add_message(TRAFFIC_LIGHT_STATUS, ctypes.sizeof(traffic_light_status), traffic_light_status)
+        self.add_message(TRAFFIC_LIGHT_DETECTED, ctypes.sizeof(traffic_light_status), traffic_light_status)
 
     def add_face_detection(self, status):
         if self.debug:
