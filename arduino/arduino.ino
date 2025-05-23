@@ -26,7 +26,7 @@
 // Arduino Mega has more pins to be utilized, plaese contact TAs for details
 
 // #define USE_ULTRASONIC_SENSOR
-// #define USE_1D_LIDAR
+#define USE_1D_LIDAR
 #define USE_RASPBERRY_PI
 #define __DEBUG__
 
@@ -83,7 +83,7 @@ int StopSignDetected = 0; // Indicate that the stop sign is detected
 float StopSignDetectedConfidence = 0.0; // Indicate the confidence of the stop sign detection
 float RoverGlobalCoordX = 0.0; // GPS x coordinate
 float RoverGlobalCoordY = 0.0; // GPS y coordinate
-bool TrafficLightStatus = 0; // 0: red, 1: green
+int32_t TrafficLightStatus = 0; // 0: red, 1: green
 int FaceDetected = 0; // Indicate that the face is detected
 
 // boolean NewSweeping = 0; // Indicate that the scanned data is new.
@@ -147,7 +147,13 @@ void setup()
 void loop() // Nonreal time loop, keep running but will be interrupted anytime
 {
 // put your main code here, to run repeatedly:
-
+Serial.print("State:");
+Serial.print(state);
+Serial.print(" DebugVariable1:");
+Serial.print(StateflowBlock_Y.DebugVariable1);
+Serial.print(" DebugVariable2:");
+Serial.print(StateflowBlock_Y.DebugVariable2);
+Serial.print("\n");
 ////============Print a message if either timer timeout (couldn't finish the code before next interrupt)//
 //  100% means the interrupt function will NOT have enough time to execute
 // PrintIfTimerTimeout();   // You can comment out this one during your test. Just print this from time to time to make sure your code doesn't overload the micro processor
@@ -239,8 +245,12 @@ void InterruptFunction3() // Lower Priority, Called by Timer 4  // Could be used
   StateflowBlock_U.pause_button_in = !digitalRead(PAUSE_BUTTON);
   StateflowBlock_U.on_button_in = !digitalRead(ON_BUTTON);
   StateflowBlock_U.decel_button_in = !digitalRead(DECEL_BUTTON);
+  #ifdef USE_ULTRASONIC_SENSOR
   StateflowBlock_U.UltrasoundDistanceA = UltrasoundDistanceA;
-  // StateflowBlock_U.UltrasoundDistanceA = LidarDistanceA;
+  #endif
+  #ifdef USE_1D_LIDAR
+  StateflowBlock_U.UltrasoundDistanceA = LidarDistanceA;
+  #endif
   StateflowBlock_U.DC_MotorA_SpeedFeedback = DC_MotorA_SpeedFeedback;
   StateflowBlock_U.DC_MotorB_SpeedFeedback = DC_MotorB_SpeedFeedback;
   StateflowBlock_U.RoverGlobalDirection = RoverGlobalDirection;

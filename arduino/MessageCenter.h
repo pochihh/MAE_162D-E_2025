@@ -35,12 +35,12 @@ struct gps_xy_coordinate
 // traffic light status types for TRAFFIC_LIGHT_STATUS (111)
 struct traffic_light_status 
 {
-    bool status;
+    int32_t status;
 };
 
 struct face_detected
 {
-    int res;
+    int32_t res;
 };
 
 
