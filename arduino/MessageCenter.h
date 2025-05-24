@@ -8,7 +8,7 @@
 #define NO_OBJECT_DETECTED 100
 #define YOLO_OBJECT_DETECTED 101
 #define FACE_DETECTED 102
-#define TRAFFIC_LIGHT_STATUS 103
+#define TRAFFIC_LIGHT_DETECTED 103
 #define GPS_XY_COORDINATE 110
 
 // detection object types for YOLO_OBJECT_DETECTED (101)
@@ -32,7 +32,7 @@ struct gps_xy_coordinate
     float y;
 };
 
-// traffic light status types for TRAFFIC_LIGHT_STATUS (111)
+// traffic light status types for TRAFFIC_LIGHT_DETECTED (111)
 struct traffic_light_status 
 {
     int32_t status;

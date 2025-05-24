@@ -9,12 +9,12 @@ extern "C"
 #include "MessageCenter.h"
 
 extern MessageCenter RoverGlobalMsg;
-extern int StopSignDetected;             // Indicate that the stop sign is detected
+extern int32_t StopSignDetected;             // Indicate that the stop sign is detected
 extern float StopSignDetectedConfidence; // Indicate the confidence of the stop sign detection
 extern float RoverGlobalCoordX;          // GPS x coordinate
 extern float RoverGlobalCoordY;          // GPS y coordinate
-extern bool TrafficLightStatus;          // 0: red, 1: green
-extern int FaceDetected;                 // Indicate that the face is detected
+extern int32_t TrafficLightStatus;          // 0: red, 1: green
+extern int32_t FaceDetected;                 // Indicate that the face is detected
 
 void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvHeader *tlvHeaders, uint8_t **tlvData)
 {
@@ -53,7 +53,7 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 RoverGlobalCoordY = gps_coord.y;
                 break;
 
-            case TRAFFIC_LIGHT_STATUS:
+            case TRAFFIC_LIGHT_DETECTED:
                 // copy the data to a local variable
                 traffic_light_status light_status;
                 memcpy(&light_status, tlvData[i], sizeof(light_status));
@@ -99,7 +99,7 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 Serial.println(RoverGlobalCoordY);
                 break;
 
-            case TRAFFIC_LIGHT_STATUS:
+            case TRAFFIC_LIGHT_DETECTED:
                 Serial.print("Received traffic light status: ");
                 Serial.println(TrafficLightStatus);
                 break;
