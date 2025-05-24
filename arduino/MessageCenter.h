@@ -36,6 +36,7 @@ struct gps_xy_coordinate
 struct traffic_light_status 
 {
     int32_t status;
+    float confidence;
 };
 
 struct face_detected
@@ -74,6 +75,5 @@ public:
     int messageCount = 0;
     
 };
-
 
 #endif // MESSAGECENTER_H

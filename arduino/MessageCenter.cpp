@@ -42,6 +42,7 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                     }
                 }
                 break;
+
             case GPS_XY_COORDINATE:
                 // copy the data to a local variable
                 gps_xy_coordinate gps_coord;
@@ -51,6 +52,7 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 RoverGlobalCoordX = gps_coord.x;
                 RoverGlobalCoordY = gps_coord.y;
                 break;
+
             case TRAFFIC_LIGHT_STATUS:
                 // copy the data to a local variable
                 traffic_light_status light_status;
@@ -58,7 +60,9 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
 
                 // Process the traffic light
                 TrafficLightStatus = light_status.status;
+                // light_status.confidence is not used for now
                 break;
+
             case FACE_DETECTED:
                 // copy the data to a local variable
                 face_detected face_det;
@@ -67,6 +71,7 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
                 // Process the face detection results
                 FaceDetected = face_det.res;
                 break;
+
             default:
                 // do nothing
                 break;
@@ -76,7 +81,6 @@ void decodeCallback(DecodeErrorCode *error, const FrameHeader *frameHeader, TlvH
 #ifdef __DEBUG__
         for (size_t i = 0; i < frameHeader->numTlvs; ++i)
         {
-            Serial.println(tlvHeaders[i].tlvType);
             switch (tlvHeaders[i].tlvType)
             {
             case YOLO_OBJECT_DETECTED:
